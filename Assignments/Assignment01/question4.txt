@@ -1,0 +1,9 @@
+Explain the differences between the retained-mode and the immediate mode rendering
+
+
+
+Immediate mode is a computational strategies for a computer graphics in which commands that immediately render graphical elements are issued.Also it is an option in the driver sounds which should be important whereas 
+
+In retained mode the client calls do not directly cause actual rendering, but updates an abstract internal model which is maintained within the library's data space.Because it allows the library to be optimized when the actual render takes place during the processing of related objects.
+
+
