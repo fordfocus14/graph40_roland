@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+  <html>
+  <head>
+  <meta charset="utf-8">
+  <title>Write a JavaScript program to display the current date and time on the screen, date and time should be updated every second, date and time should be in the following format</title>
+  </head>
+  <body>
+      <script>
+
+var d = new Date(),
+    minute = d.getMinutes().toString().length == 1 ? '0'+d.getMinutes() : d.getMinutes(),
+    var sec = today.getSeconds(),
+    hours = d.getHours().toString().length == 1 ? '0'+d.getHours() : d.getHours(),
+    months_list = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+    days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+return days[d.getDay()]+','+d.getDate()+' '+months_list[d.getMonth()]+' '+d.getFullYear()+'|'+hours+':'+minute+''+sec;
+      </script>
+</body>
+  </html>

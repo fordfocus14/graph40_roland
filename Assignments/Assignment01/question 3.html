@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Write a JavaScript program to check whether a matrix is a diagonal matrix or not, a diagonal matrix is a matrix in which the entries outside the main diagonal are all zero, for example: 
+    User should input the previous matrix as a 2d array
+</title>
+</head>
+<body>
+<script>
+     function Check_diagonal(my_matrix) {      
+        for (var i = 0; i < my_matrix.length; i++) {
+        for (var j = 0; j < my_matrix.length; j++) {
+        if (i !== j && my_matrix[i][j] !== 0) 
+                      return false;
+                }
+            }
+            return true;
+        };
+        console.log(Check_diagonal([[1, 0, 0], [0, 2, 0], [0, 0, 3] ]));
+        console.log(Check_diagonal([[1, 0, 0], [0, 2, 3], [0, 0, 3] ]));
+</script>
+</body>
+</html>

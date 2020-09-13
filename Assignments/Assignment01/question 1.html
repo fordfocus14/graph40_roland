@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+  <html>
+  <head>
+  <meta charset="utf-8">
+  <title> Write a JavaScript program to find the area of a circle, the user should input the radius of the circle in a text field, don’t use any button to calculate the area in the output field, the area should be updated on keypress</title>
+  </head>
+  <body>
+      <script>
+
+function Area_circle(radius) {
+  return (radius *radius * Math.PI);
+}
+
+function Area() {
+  var my_area = Area_circle(radius);
+  alert("Area of a circle is:" + my_area + "centimeters.");
+}
+
+var radius = parseFloat(prompt("Please Enter the radius in cm:", 0));
+Area(radius);
+      </script>
+</body>
+  </html>
