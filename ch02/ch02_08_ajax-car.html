@@ -1,14 +1,14 @@
 <html>
 <head>
   <title>Real-Time 3D Graphics with WebGL2</title>
-  <link rel="shortcut icon" type="image/png" href="/common/images/favicon.png" />
+  <link rel="shortcut icon" type="image/png" href="../common/images/favicon.png" />
 
   <!-- libraries -->
-  <link rel="stylesheet" href="/common/lib/normalize.css">
-  <script type="text/javascript" src="/common/lib/gl-matrix.js"></script>
+  <link rel="stylesheet" href="../common/lib/normalize.css">
+  <script type="text/javascript" src="../common/lib/gl-matrix.js"></script>
 
   <!-- modules -->
-  <script type="text/javascript" src="/common/js/utils.js"></script>
+  <script type="text/javascript" src="../common/js/utils.js"></script>
 
   <!-- vertex shader -->
   <script id="vertex-shader" type="x-shader/x-vertex">
@@ -104,7 +104,7 @@
       // these values, but we've decided to keep these as simple and low-level as possible
       // for education purposes.
       for (let i = 1; i < 179; i++) {
-        fetch(`/common/models/nissan-gtr/part${i}.json`)
+        fetch(`../common/models/nissan-gtr/part${i}.json`)
         .then(res => res.json())
         .then(data => {
 
