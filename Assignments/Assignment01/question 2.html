@@ -9,11 +9,11 @@
 
 var d = new Date(),
     minute = d.getMinutes().toString().length == 1 ? '0'+d.getMinutes() : d.getMinutes(),
-    var sec = today.getSeconds(),
+    sec = d.getSeconds(),
     hours = d.getHours().toString().length == 1 ? '0'+d.getHours() : d.getHours(),
-    months_list = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
-    days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
-return days[d.getDay()]+','+d.getDate()+' '+months_list[d.getMonth()]+' '+d.getFullYear()+'|'+hours+':'+minute+''+sec;
+    months_list = ['January','February','March','April','May','June','July','August','September','October','November','December'],
+    days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+document.write(days[d.getDay()]+','+d.getDate()+' '+months_list[d.getMonth()]+' '+d.getFullYear()+'|'+d.getHours()+':'+d.getMinutes()+':'+d.getSeconds());
       </script>
 </body>
   </html>
