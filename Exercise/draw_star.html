@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>draw star</title>
+
+</head>
+<body>
+<canvas id="canvasgraph" width="200" height="200"> </canvas>
+<script>
+    window.onload = function (){
+        var can = document.getElementById("canvasgraph");
+        var ctx = can.getContext("2d");
+        ctx.beginPath();
+        ctx.moveTo(25,25);
+        ctx.lineTo(80,150);
+        ctx.lineTo(80,100)
+        ctx.strokeStyle = "blue";
+        ctx.stroke();
+
+    }
+</script>
+</body>
+</html>
