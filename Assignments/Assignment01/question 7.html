@@ -119,15 +119,13 @@
             */
             const vertices = [
                 -0.5, 0.5, 0,
-                0.5, 0.5, 0,
-                0,0,
-                0.5,-0.5,0
-
-
+                -0.5, -0.5, 0,
+                0.5, -0.5, 0,
+                0.5, 0.5, 0
             ];
 
             // Indices defined in counter-clockwise order
-            indices = [0, 1];
+            indices = [0, 1, 2, 0, 2, 3];
 
             // Setting up the VBO
             squareVertexBuffer = gl.createBuffer();

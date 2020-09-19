@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title> Modify code from ch01/ch01_03_attributes.html to add two more keypresses with the following functionality:
+    when press 8 the color of the canvas will change its color randomly every second.
+    when press 9 the random color change will stop.
+    </title>
+</head>
+<style>
+    canvas {
+      border: 5px dotted blue;
+      
+    }
+  </style>
+<body>
+  <script>
+    function main(bckColor) {
+  var canvas = document.getElementsByTagName("CANVAS")[0],
+    ctx = canvas.getContext("2d");
+  if (canvas.height) {
+    canvas.height = 0;
+  }
+  canvas.width = window.innerWidth;
+  canvas.height = document.documentElement.scrollHeight;
+  var cW = canvas.width,
+    cH = canvas.height;
+  
+  ctx.fillStyle = bckColor || "#000";
+
+  ctx.fillRect(0, 0, cW, cH);
+  ctx.fill();
+
+  ctx.beginPath();
+  
+  ctx.shadowBlur = 5;
+
+  ctx.arc(cW / 2, cH / 2, 50, 0, 2 * Math.PI, false);
+  ctx.fill();
+  ctx.closePath();
+}
+var colArray = ['green', 'yellow', 'blue', 'pink','red', 'brown', 'orange']
+var changeCol = setInterval(function() {
+
+  let backColor = colArray[Math.floor(Math.random() * 7 + 1)];
+
+  main(backColor)
+
+}, 2000)
+window.addEventListener("load", main);
+  </script>
+  <canvas></canvas>
+</body>
+</html>
