@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>DDA ALGORITHM</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/p5.js"></script>
+    <style> body {padding: 1px; margin: 1px;} </style>
+  </head>
+  <body>
+    <script>
+        
+const width=500
+const height=300
+const increment=50
+
+let x1 = null;
+let y1 = null;
+let x2 = null;
+let y2 = null;
+
+function setup(){
+    createCanvas(width,height);
+    background(200);
+    grid(width,height,increment);
+}
+
+function grid(width,height,increment){
+    stroke(120);
+    for(let i=0;i <= width;i += increment){
+        line(i,0,i,height);    
+    }
+    for(let i=0;i <= height;i += increment){
+        line(0,i,width,i);    
+    }
+}
+function mouseClicked(){
+    if(!(x1)){
+        x1 = Math.floor(mouseX/increment);
+        y1 = Math.floor(mouseY/increment);
+        fill(255,255,0);
+        rect(x1*increment,y1*increment,increment,increment);
+        console.log('1')
+    }else{
+        x2 = Math.floor(mouseX/increment);
+        y2 = Math.floor(mouseY/increment);
+        DDA(x1,y1,x2,y2,increment);
+        x1=null;
+        y1=null;      
+        console.log('2'); 
+    }   
+}
+
+function DDA(x1,y1,x2,y2,increment){ 
+    let dx = x2 - x1;
+    let dy = y2 - y1;
+
+    let steps = Math.abs(dx) > Math.abs(dy) ? Math.abs(dx) : Math.abs(dy);
+
+
+    let Xinc = dx / steps;
+    let Yinc = dy / steps;
+
+    let x = x1;
+    let y = y1;
+
+    
+    for(let i = 0;i <= steps; i++){
+        console.log(`PIXEL AT: (${Math.round(x)},${Math.round(y)})`);
+        fill(0);
+        rect(Math.round(x)*increment,Math.round(y)*increment,increment,increment);
+        x += Xinc;
+        y += Yinc;
+    }
+}
+    </script>
+  </body>
+</html>
