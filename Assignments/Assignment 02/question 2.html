@@ -1,98 +1,93 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.3/p5.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.3/addons/p5.dom.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.3/addons/p5.sound.min.js"></script>
+<head>
+  <meta charset="utf-8">
+  <title>Bresenham's line algorithm </title>
+</head>
+<body>
+  <canvas id="webgl" width="400" height="400"></canvas>
 
-  </head>
-  <style>
-    html, body {
-  margin: 0;
-  padding: 0;
-}
-canvas {
-  display: block;
-}
-
-  </style>
-  <body>
-    <script>
-var grid;
-var res = 5;
-var rows, cols;
-var pos;
-var vel;
-
-function Array2D(rows, cols) {
-  var arr = new Array(rows);
-  for (var i = 0; i < rows; i++) {
-    arr[i] = new Array(cols);
-  }
-  return arr;
-}
-
-function setup() {
-  createCanvas(640, 480);
-  rows = width / res;
-  cols = height / res;
-  grid = Array2D(rows, cols);
-  for (var x = 0; x < rows; x++) {
-    for (var y = 0; y < cols; y++) {
-      grid[x][y] = 0;
-    }
-  }
-  pos = createVector(0, 0);
-  vel = createVector(3, 5);
-}
-
-function draw() {
-  background(255);
-  for (var x = 0; x < rows; x++) {
-    for (var y = 0; y < cols; y++) {
-      grid[x][y] = 0;
-    }
-  }
-  bresenham_Line(pos.x, pos.y, (width - 1) / res, (height - 1) / res);
-  for (var x = 0; x < rows; x++) {
-    for (var y = 0; y < cols; y++) {
-      var px = x * res;
-      var py = y * res;
-      stroke(0);
-      strokeWeight(res / 20);
-      if (grid[x][y] == 1) {
-        fill(0);
-      } else {
-        noFill();
-      }
-      square(px, py, res);
-    }
-  }
-  pos.add(vel);
-  if (pos.x > width / res - res || pos.x < 1) {
-    vel.x *= -1;
-  }
-  if (pos.y > height / res || pos.y < 1) {
-    vel.y *= -1;
-  }
+  <script>
   
+	  
+	function verifyLoS(start, end) {
+    var difX = end.x - start.x;
+    var difY = end.y - start.y;
+	var dist = Math.abs(difX) + Math.abs(difY);
+
+    var dx = difX / dist;
+    var dy = difY / dist;
+
+    for (var i = 0, x, y; i <= Math.ceil(dist); i++) {
+        x = Math.floor(start.x + dx * i);
+        y = Math.floor(start.y + dy * i);
+        draw(x,y);
+    }
+    return true;
 }
 
-function bresenham_Line(x0, y0, x1, y1) {
-  var dX = x1 - x0;
-  var dY = y1 - y0;
-  var dErr = abs(dY / dX);
-  var error = 0;
-  var y = y0;
-  for (var x = x0; x <= x1; x++) {
-    grid[x][y] = 1;
-    error += dErr;
-    if (error >= 0.5) {
-      y += (dY > 0 ? 1 : -1);
-      error -= 1;
+var HEIGHT = 14,
+    WIDTH = 14,
+    PX = 32;
+
+var canvas, ctx;
+
+function main () {
+  canvas = document.getElementById("webgl");
+  ctx = canvas.getContext("2d");
+  canvas.height = HEIGHT * PX;
+  canvas.width = WIDTH * PX;
+
+  loop();
+}
+function grid(width,height,increment){
+    stroke(120);
+    for(let i=0;i <= width;i += increment){
+        line(i,0,i,height);    
+    }
+    for(let i=0;i <= height;i += increment){
+        line(0,i,width,i);    
+    }
+}
+
+function mouseClicked(){
+    if(!(x)){
+        x = Math.floor(mouseX/increment);
+        y = Math.floor(mouseY/increment);
+        fill(255,255,0);
+        rect(x1*increment,y*increment,increment,increment);
+        console.log('1')
+    }else{
+        x1 = Math.floor(mouseX/increment);
+        y1 = Math.floor(mouseY/increment);
+        BRE(x,y,x1,y1,increment);
+        x=null;
+        y=null;      
+        console.log('2'); 
+    }   
+}
+
+function loop() {
+  for (var x=0;x<HEIGHT; x++) {
+    for (var y=0; y<WIDTH; y++) {
+      ctx.fillStyle = ((x+y)%2===0)?"#AFA":"#AEA";
+      ctx.fillRect(x*PX,y*PX,PX,PX);
     }
   }
+  var a = {x:1.5, y:9.5},
+      b = {x:12.5, y:1.5};
+  verifyLoS(a, b);
+  ctx.beginPath();
+  ctx.moveTo(a.x*PX,a.y*PX);
+  ctx.lineTo(b.x*PX,b.y*PX);
+  ctx.stroke();
 }
-    </script>
-  </body>
+
+function draw(x, y) {
+    ctx.fillStyle = "rgba(255,0,0,1)";
+    ctx.fillRect(x*PX,y*PX,PX,PX);
+}
+main();
+  </script>
+</body>
 </html>
