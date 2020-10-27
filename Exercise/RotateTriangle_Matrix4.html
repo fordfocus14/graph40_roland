@@ -59,7 +59,7 @@
 
         // Set the rotation matrix
         var ANGLE = 90.0; // The rotation angle
-        xformMatrix.setRotate(ANGLE, 0, 0, 1);
+        xformMatrix.setRotate(ANGLE, 1, 3, 1);
 
         // Pass the rotation matrix to the vertex shader
         var u_xformMatrix = gl.getUniformLocation(gl.program, 'u_xformMatrix');
