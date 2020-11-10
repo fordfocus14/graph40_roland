@@ -1,103 +1,86 @@
-<html lang="en"><head>
-    <meta charset="utf-8">
-    <title>Translate a Triangle</title>
-
-</head><body onload="main()">
-<canvas id="webgl" width="400" height="400">
-    Please use a browser that supports "canvas"
-</canvas>
-
-
-<script src="https://rawgit.com/huningxin/webglbook_examples/master/lib/webgl-utils.js"></script>
-<script src="https://rawgit.com/huningxin/webglbook_examples/master/lib/webgl-debug.js"></script>
-<script src="https://rawgit.com/huningxin/webglbook_examples/master/lib/cuon-utils.js"></script>
-<script src="https://rawgit.com/huningxin/webglbook_examples/master/lib/cuon-matrix.js"></script>
-<script type="text/javascript">
-    // MultiPoint.js (c) 2012 matsuda
-    // Vertex shader program
-    var VSHADER_SOURCE =
-        'attribute vec4 a_Position;\n' +
-        'void main() {\n' +
-        '  gl_Position = a_Position;\n' +
-        '  gl_PointSize = 10.0;\n' +
-        '}\n';
-
-    // Fragment shader program
-    var FSHADER_SOURCE =
-        'void main() {\n' +
-        '  gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);\n' +
-        '}\n';
-
-    function main() {
-        // Retrieve <canvas> element
-        var canvas = document.getElementById('webgl');
-
-        // Get the rendering context for WebGL
-        var gl = getWebGLContext(canvas);
-        if (!gl) {
-            console.log('Failed to get the rendering context for WebGL');
-            return;
-        }
-
-        // Initialize shaders
-        if (!initShaders(gl, VSHADER_SOURCE, FSHADER_SOURCE)) {
-            console.log('Failed to intialize shaders.');
-            return;
-        }
-
-        // Write the positions of vertices to a vertex shader
-        var n = initVertexBuffers(gl);
-        if (n < 0) {
-            console.log('Failed to set the positions of the vertices');
-            return;
-        }
-
-        // Specify the color for clearing <canvas>
-        gl.clearColor(0, 0, 0, 1);
-
-        // Clear <canvas>
-        gl.clear(gl.COLOR_BUFFER_BIT);
-
-        // Draw three points
-        gl.drawArrays(gl.POINTS, 0, n);
-    }
-
-    function initVertexBuffers(gl) {
-        var vertices = new Float32Array([
-            0.0, 0.5,   -0.5, -0.5,   0.5, -0.5
-        ]);
-        var n = 3; // The number of vertices
-
-        // Create a buffer object
-        var vertexBuffer = gl.createBuffer();
-        if (!vertexBuffer) {
-            console.log('Failed to create the buffer object');
-            return -1;
-        }
-
-        // Bind the buffer object to target
-        gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
-        // Write date into the buffer object
-        gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW);
-
-        var a_Position = gl.getAttribLocation(gl.program, 'a_Position');
-        if (a_Position < 0) {
-            console.log('Failed to get the storage location of a_Position');
-            return -1;
-        }
-        // Assign the buffer object to a_Position variable
-        gl.vertexAttribPointer(a_Position, 2, gl.FLOAT, false, 0, 0);
-
-        // Enable the assignment to a_Position variable
-        gl.enableVertexAttribArray(a_Position);
-
-        return n;
-    }
+        <!DOCTYPE html>
+        <html>
+        
+        <head>
+          <title>Draw a point at the origin of the canvas the point should translate to the two corners of the
+            canvas using the sine or cosine function, you should update the position of this point every
+            second.
+            </title>
+            <script >
 
 
 
+              function wave() {
+                    var canvas = document.getElementById("canvas");
+                    var gl = canvas.getContext("2d");
+        
+                    gl.clearRect(0, 0, 600, 600);
+                    Axes(gl);
+                    gl.save();            
+                    Sine(gl, count, 100);
+                    gl.restore();
+                    count += 2;
+                    window.requestAnimationFrame(wave);
+                }
+               
+                function drawPoint(gl, y) {            
+                    var radius = 3;
+                    gl.beginPath();
+                    gl.fill();
+                    gl.stroke();
+                }
+                function Sine(gl, x, y) {
+                    var w = gl.canvas.width;
+                    var h = gl.canvas.height;
+                    var s = 10;
+                    gl.beginPath();
+                    gl.lineWidth = 0;
+                    gl.strokeStyle = "red";
 
-</script>
-
-
-</body></html>
+                    var x_axis = 2;
+                    var y_axis = 0;
+                    var cos = 150;
+                    var sin = 20;
+                    gl.moveTo(x_axis , 50);
+                    while (x_axis  < w) {
+                        y_axis = h/2 + cos* Math.sin((x_axis+x)/sin);
+                        gl.lineTo(x_axis, y_axis);
+                        x_axis++;
+                    }
+                    gl.stroke();
+                    gl.save();
+                    drawPoint(gl, y_axis);
+                    gl.stroke();
+                    gl.restore();
+                }
+                function Axes(gl,axis) {
+                    var w = gl.canvas.width;
+                    var h = gl.canvas.height;
+                    var min = 0;
+                    
+                    gl.beginPath();
+                    gl.strokeStyle = "white";
+                    gl.lineTo(w, h/2);
+                    gl.moveTo(w/2, 0);
+                    gl.lineTo(w/2, h);
+                    gl.moveTo(0, 0);
+                    gl.moveTo(min, h/2);
+                    gl.lineTo(0, h);
+                    gl.stroke();
+                }
+                
+                
+                function init() {
+                    window.requestAnimationFrame(wave);
+                }
+                var count = -2;
+            </script>
+        </head>
+        
+        <body onload="init()">
+            <canvas id="canvas" style="border: 1px solid black;" width="100" height="300"></canvas>
+            
+      
+        </body>
+        </html>
+        
