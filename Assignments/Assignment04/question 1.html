@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="utf-8"/>
-    <title>Translate a Triangle</title>
+    <title>Keypress Animation</title>
 
 <body onload="main()">
-<canvas id="webgl" width="400" height="400">
+<canvas id="webgl" width="500" height="500">
     Please use a browser that supports "canvas"
 </canvas>
 </body>
@@ -61,8 +61,8 @@
             return;
         }
 
-        // Specify the color for clearing <canvas>
-        gl.clearColor(1, 1, 0, 1);
+        // Specify the color for clearing canvas
+        gl.clearColor(0, 0, 1, 1);
 
         // Get the storage location of u_ViewMatrix
         var u_ViewMatrix = gl.getUniformLocation(gl.program, 'u_ViewMatrix');
@@ -82,9 +82,9 @@
     function initVertexBuffers(gl) {
         var verticesColors = new Float32Array([
             // Vertex coordinates and color
-            0.0,  0.5,   0.0,  0.4,  0.4,  1.0,
-            -0.5, -0.5,   0.0,  0.4,  0.4,  1.0,
-            0.5, -0.5,   0.0,  1.0,  0.4,  0.4,
+            -0.5,  0.4,   0.0,  -0.5,  0.4,  -0.5,
+            -0.5, -0.5,   0.0,  0.4,  -0.5,  1.0,
+            0.5, -0.5,   -0.5,  1.0,  0.4,  0.4,
         ]);
         var n = 3;
 
@@ -107,7 +107,7 @@
             return -1;
         }
 
-        gl.vertexAttribPointer(a_Position, 3, gl.FLOAT, false, FSIZE * 6, 0);
+        gl.vertexAttribPointer(a_Position, 3, gl.FLOAT, false, FSIZE * 1, 0);
         gl.enableVertexAttribArray(a_Position);  // Enable the assignment of the buffer object
 
         // Get the storage location of a_Position, assign buffer and enable
@@ -123,7 +123,7 @@
         return n;
     }
 
-    var g_eyeX = 0.20, g_eyeY = 0.25, g_eyeZ = 0.25; // Eye position
+    var g_eyeX = 0.20, g_eyeY = 0.05, g_eyeZ = 0.05; // Eye position
     function keydown(ev, gl, n, u_ViewMatrix, viewMatrix) {
         if(ev.keyCode == 39) { // The right arrow key was pressed
             g_eyeX += 0.01;
@@ -142,7 +142,7 @@
 
     function draw(gl, n, u_ViewMatrix, viewMatrix) {
         // Set the matrix to be used for to set the camera view
-        viewMatrix.setLookAt(g_eyeX, g_eyeY, g_eyeZ, 0, 0, 0, 0, 1, 0);
+        viewMatrix.setLookAt(g_eyeX, g_eyeY, g_eyeZ, 0, 0, 0, 1, 0, 1);
 
         // Pass the view projection matrix
         gl.uniformMatrix4fv(u_ViewMatrix, false, viewMatrix.elements);

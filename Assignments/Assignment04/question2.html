@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8"/>
-    <title>Translate a Triangle</title>
+    <title>Random Color Points Animation</title>
 
 <body onload="main()">
 <canvas id="webgl" width="400" height="400">
@@ -29,7 +29,7 @@
     // Fragment shader program
     var FSHADER_SOURCE =
         'void main() {\n' +
-        '  gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);\n' +
+        '  gl_FragColor = vec4(1.0, 0.0, 1.0, 0.0);\n' +
         '}\n';
 
     function main() {
@@ -58,7 +58,8 @@
 
         // Specify the color for clearing <canvas>
         gl.clearColor(0.0, 0.0, 0.0, 1.0);
-
+        
+        
         var u_ModelMatrix = gl.getUniformLocation(gl.program, 'u_ModelMatrix');
         if (!u_ModelMatrix) {
             console.log('Failed to get the storage location of u_ModelMatrix');
@@ -83,6 +84,7 @@
 
             x_new = x + get_random();
             y_new = y + get_random();
+           
 
             if(x_new >= 0.75){
                 x_new = x_new  - 0.1
@@ -110,11 +112,9 @@
 
     }
 
-    function get_random(){
-        const options = [-0.1, 0, 0.1];
-        return options[Math.floor(Math.random() * (3))];
+    
 
-    }
+   
 
     function initVertexBuffers(gl) {
         var vertices = new Float32Array([
@@ -148,7 +148,28 @@
 
         return n;
     }
-
+  var seconds;
+  seconds = setInterval(drawAnimation, 5000); 
+    colorvertices();
+  var gl;
+  function  colorvertices () {
+      if (!gl) {
+        clearInterval(seconds);
+        return;
+      }
+      gl.viewport(0, 0,
+        gl.drawingBufferWidth, gl.drawingBufferHeight);
+    }
+  function get_random(){
+        const options = [-0.1, 0.0, 0.1];
+        return options[Math.floor(Math.random() * (3))];
+        var color = get_Color();
+        gl.clearColor(0.0, 0.0, 0.0, 1.0);
+        function get_Color() {
+        return [Math.random(), Math.random(), Math.random()];
+  }
+    }
+  
 
 </script>
 </head>
