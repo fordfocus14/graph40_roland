@@ -73,8 +73,6 @@
 
         // Create the view matrix
         var viewMatrix = new Matrix4();
-        // Register the event handler to be called on key press
-        document.onkeydown = function(ev){ keydown(ev, gl, n, u_ViewMatrix, viewMatrix); };
 
         draw(gl, n, u_ViewMatrix, viewMatrix);   // Draw
     }
@@ -82,11 +80,43 @@
     function initVertexBuffers(gl) {
         var verticesColors = new Float32Array([
             // Vertex coordinates and color
-            0.0,  0.5,   0.0,  0.4,  0.4,  1.0,  // The front blue one
-            -0.5, -0.5,   0.0,  0.4,  0.4,  1.0,
-            0.5, -0.5,   0.0,  1.0,  0.4,  0.4,
+            -1.0, -1.0,  1.0,
+   1.0, -1.0,  1.0,
+   1.0,  1.0,  1.0,
+  -1.0,  1.0,  1.0,
+  
+  // Back face
+  -1.0, -1.0, -1.0,
+  -1.0,  1.0, -1.0,
+   1.0,  1.0, -1.0,
+   1.0, -1.0, -1.0,
+  
+  // Top face
+  -1.0,  1.0, -1.0,
+  -1.0,  1.0,  1.0,
+   1.0,  1.0,  1.0,
+   1.0,  1.0, -1.0,
+  
+  // Bottom face
+  -1.0, -1.0, -1.0,
+   1.0, -1.0, -1.0,
+   1.0, -1.0,  1.0,
+  -1.0, -1.0,  1.0,
+  
+  // Right face
+   1.0, -1.0, -1.0,
+   1.0,  1.0, -1.0,
+   1.0,  1.0,  1.0,
+   1.0, -1.0,  1.0,
+  
+  // Left face
+  -1.0, -1.0, -1.0,
+  -1.0, -1.0,  1.0,
+  -1.0,  1.0,  1.0,
+  -1.0,  1.0, -1.0,
+
         ]);
-        var n = 3;
+        var n = 12;
 
         // Create a buffer object
         var vertexColorbuffer = gl.createBuffer();
@@ -123,10 +153,16 @@
         return n;
     }
 
-    var g_eyeX = 0.20, g_eyeY = 0.25, g_eyeZ = 0.25; // Eye position
+    var g_eyeX = 0.23, g_eyeY = 0.27, g_eyeZ = 0.60; // Eye position
     function keydown(ev, gl, n, u_ViewMatrix, viewMatrix) {
         if(ev.keyCode == 39) { // The right arrow key was pressed
             g_eyeX += 0.01;
+        } else
+        if (ev.keyCode == 38) { // The up arrow key was pressed
+            g_eyeY += 0.01;
+        } else
+        if (ev.keyCode == 40){ // The down arrow key was pressed
+            g_eyeY -=0.01;
         } else
         if (ev.keyCode == 37) { // The left arrow key was pressed
             g_eyeX -= 0.01;
@@ -136,7 +172,7 @@
 
     function draw(gl, n, u_ViewMatrix, viewMatrix) {
         // Set the matrix to be used for to set the camera view
-        viewMatrix.setLookAt(g_eyeX, g_eyeY, g_eyeZ, 0, 0, 0, 0, 1, 0);
+        viewMatrix.setLookAt(g_eyeX, g_eyeY, g_eyeZ, 0, 1,  0, 0, 1, 0);
 
         // Pass the view projection matrix
         gl.uniformMatrix4fv(u_ViewMatrix, false, viewMatrix.elements);
